@@ -30,7 +30,7 @@ function App() {
   async function handleSubmit(e) {
     e.preventDefault();
     const newItem = {
-      id: items.length + 1,
+      id: item.length + "1",
       item: item,
       checked: false,
     };
@@ -62,6 +62,28 @@ function App() {
       console.error(error);
     }
   }
+  async function handleCheck(id) {
+    try {
+      const product = items.find((item) => item.id === id);
+      const response = await fetch(`${base_url}/items/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...product,
+          checked: !product.checked,
+        }),
+      });
+      const data = await response.json();
+      const dataUpdate = items.map((item) =>
+        item.id === id ? { ...item, checked: data.checked } : item
+      );
+      setItems(dataUpdate);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="App">
@@ -72,7 +94,11 @@ function App() {
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <Content items={items} handleDelete={handleDelete} />
+          <Content
+            items={items}
+            handleDelete={handleDelete}
+            handleCheck={handleCheck}
+          />
         )}
       </main>
       <Footer />
