@@ -4,6 +4,16 @@
       "id": "61",
       "item": "cheese",
       "checked": false
+    },
+    {
+      "id": "51",
+      "item": "apple",
+      "checked": false
+    },
+    {
+      "id": "41",
+      "item": "milk",
+      "checked": false
     }
   ]
 }

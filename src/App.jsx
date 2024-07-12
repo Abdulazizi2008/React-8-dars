@@ -9,6 +9,7 @@ function App() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState("true");
   const [item, setItem] = useState("");
+  const [filter, setFilter] = useState("");
   console.log(item);
 
   const base_url = "http://localhost:3000";
@@ -89,13 +90,15 @@ function App() {
     <div className="App">
       <Header title="Grocery List" />
       <AddItem setItem={setItem} item={item} handleSubmit={handleSubmit} />
-      <SearchItem />
+      <SearchItem filter={filter} setFilter={setFilter} />
       <main>
         {loading ? (
           <p>Loading...</p>
         ) : (
           <Content
-            items={items}
+            items={items.filter((item) =>
+              item.item.toLowerCase().includes(filter.toLowerCase())
+            )}
             handleDelete={handleDelete}
             handleCheck={handleCheck}
           />
